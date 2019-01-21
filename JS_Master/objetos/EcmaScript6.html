@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>ECMASCRIPT 6</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width-device-width, initial-scale=1.0" />
+
+</head>
+
+<body>
+<noscript></noscript>
+
+<script>
+var mensaje = "Hola Mundo! \nQué fácil es incluir 'comillas simples' y \"comillas dobles\"";
+document.write( `<h1>${mensaje}</h1>`);
+
+function ejecutaCodigo( x = 2, y = 25 - 5, z = 37 )
+{
+	console.log( x, y, z );
+}
+ejecutaCodigo( 1, 3 ); // 1, 3, 37
+ejecutaCodigo( undefined, undefined, 15 ); //2, 20, 15
+
+
+/* +++++++++++++   Operador SPREAD ...   +++++++++++++*/
+function suma( x , y, ...argumentos )
+{
+  let resultado = x + y ;
+
+  for( const i of argumentos )
+  {
+    resultado += i;
+  }
+
+  return resultado;
+}
+console.log( suma( 3, 6 ) ); //3 + 6 = 9
+console.log( suma( 5, 10, 2, 3 ) );// 5 + 10 + 2 + 3 = 20
+console.log( suma( 1, 2, 3, 4, 5, 6 ) ); //1 + 2 + 3 + 4 + 5 + 6 = 21
+
+//------------------------
+let arrayNumeros = [3, 5, 9, 1, 12];
+
+function sumaValores( ...posiciones )
+{
+	let resultado = 0;
+	for( const i of posiciones )
+	{
+		resultado += i;
+	}
+
+	return resultado;
+}
+
+console.log( sumaValores( ...arrayNumeros ) );//3+5+9+1+12=30
+/*console.log( sumaValores( ...numerosJSON ) );*/// TypeError: numerosJSON is Not iterable
+
+//------------------------
+function promedioParametros( ...args ) //Con bucle for of
+{
+	if( arguments.length == 0)
+		{
+			return "La función requiere como mínimo un parámetro";
+		}
+	else
+	{
+		let sumaTotal = 0;
+		const numeroCasos = args.length;
+		
+		for( const i of args )
+		{
+			sumaTotal += i;
+		}
+		return sumaTotal/numeroCasos;
+	}
+}
+console.log( promedioParametros( 10, 12, 14, 16, 18, 20 ) );
+
+function promedio2( ...args ) //Con bucle for 
+{
+	if( arguments.length == 0)
+		{
+			return "La función requiere como mínimo un parámetro";
+		}
+	else
+	{
+		let sumaTotal = 0;
+		const numeroCasos = args.length;
+		
+		for( var i = 0; i < args.length; i++ )
+		{
+			sumaTotal += arguments[i];
+		}
+		return sumaTotal/numeroCasos;
+	}
+}
+console.log( promedio2( 10, 12, 14, 16, 18, 20 ) );
+
+/* +++++++++++ 3 FORMAS DIFERENTES DE DECLARAR FUNCIONES +++++++++++ */
+let suma_1 = function( x, y )
+{
+	x += 10;
+	y += 10;
+	return x + y;
+}
+console.log( suma_1( 2, 3 ) ); //25
+
+let suma_2 = ( x, y ) => x + 10 + y + 10;
+console.log( suma_2( 2, 3 ) ); //25 
+
+//Llamar a otras funciones como argumentos
+let suma_3 = ( x, y ) => console.log( x() + y() );
+suma_3( p => 2 + 10, q => 3 + 10 ); //25
+
+
+/* +++++++++++ No creación de un nuevo scope +++++++++++ */
+let arrayCoches = ["Renault", "Hyundai", "Ford"];
+document.write( "(uso de forEach en un Array sin notación =>):<br/>");
+arrayCoches.forEach( function( marca ) {
+	document.write( `Marca: ${marca}<br/>` );
+});
+
+//Sin arrow token
+const objectoCoches1 = {
+	marcas: ["Porsche", "Ferrari", "BMW"],
+	genero: "Coches deportivos",
+	mostrarCoches: function() {
+		const own = this;//para recuperar el scope del padre
+		this.marcas.forEach( function( marca ) {//Crea un nuevo scope
+			document.write( `Marca: ${marca} - ` );
+			document.write( `Género: ${own.genero}<br/>` );
+			/*Antes de recorrer la lista de marcas mediante un bucle forEach, aquí es preciso recuperar el contexto padre con own para poder acceder a continuación al atributo genero*/
+		})
+	}
+}
+document.write("<br/>Bucle de visalización de marcas con su género (forEach sin notación =>):<br/>");
+objectoCoches1.mostrarCoches();
+
+//Con arrow token =>
+const objectoCoches2 = {
+	marcas: ["Porsche", "Ferrari", "BMW"],
+	genero: "Coches deportivos",
+	mostrarCoches: function() {
+		//No se crea un nuevo ámbito
+		this.marcas.forEach( ( marca ) => {
+			document.write( `Marca: ${marca} - ` );
+			document.write( `Género: ${this.genero}<br/>` );//this.genero hace referencia al this del padre. Con el uso de arrow
+		})
+	}
+}
+document.write("<br/> forEach con notación => :<br/>");
+objectoCoches2.mostrarCoches();
+
+
+/*window.age = 12;
+
+function person() {
+	age = 34;
+
+	setTimeout( () => { console.log( this.age ) }, 1000  ); 
+	setTimeout( function() { console.log( this.age ) }, 1000 );
+}
+person();*/
+
+/* +++++++++++++ Iteración de un JSON +++++++++++++ */
+
+/*la propiedad symbol.iterator devuelve un objeto iterador, es decir, un objeto con la propiedad next()
+
+next() es invocado por for of hasta que next() devuelve {value: undefined, done: true}
+
+Para continuar el bucle y devolver un elemento de colección next() tiene que devolver {value: element_value, done: false}
+*/
+
+/*let numerosJSON = {
+	num1 : 3,
+	num2 : 5,
+	num3 : 9,
+	num4 : 1,
+	[Symbol.iterator]: function(){
+	
+		var e = this.elements;
+		var s = this.size;
+		var p = this.pointer;
+		console.log( e );
+		console.log( s );
+		console.log( p );
+
+		return{
+		 	next: function(){
+				( p > s )?
+					{value: undefined, done: true}:
+					p++; return {value:e[p-1], done:false};
+			},
+		};
+	}
+}
+
+for ( const i of numerosJSON )
+{
+	console.log( i );
+}*/
+
+
+
+
+
+/*var comentarioString = (function() 
+	{
+		//Hola,	Mi nombre es Jaime
+	}).toString().match(/[^]*\/\*([^]*)\*\/\}$/)[1];
+console.log( comentarioString );*/
+
+
+
+/* +++++++++++ ARRAY ITERATOR con parada +++++++++++ */
+function* dameEmpleado() {
+
+	const empleados = ["Jaime", "Mar", "Guille", "Cris", "Aaron"];
+
+	for( const nombre of empleados ) {
+		yield nombre;
+	}
+	console.log( "He terminado" );
+}
+
+function iterar() {
+const generaEmpleado = dameEmpleado();//Sin esta línea --> bucle infinito
+let resultado; //const --> Error: missing initializaer in const declaration
+	do
+	{
+		resultado = generaEmpleado.next(); //Return a Symbol.Iterator Object
+		if( resultado.done == false )
+		console.log( resultado );
+	}
+	while( resultado.value !== undefined )
+}
+/*{value: undefined, done: true/false} --> Symbol.Iterator Object*/
+iterar();
+
+//Entrada de datos
+function* introduceDatos(){
+	let datos = [];//este array se modificará
+	console.log( datos );
+	console.log( `Número de elementos en el array: ${datos.length}` );
+	
+	datos.push( yield );
+		console.log( datos );
+		console.log( `Número de elementos en el array: ${datos.length}` );
+
+	datos.push( yield );
+		console.log( datos );
+		console.log( `Número de elementos en el array: ${datos.length}` );
+}
+//SIEMPRE: Número de next = numero de push + 1
+//Hay que ejecutar todos los yield para que no se quede el código en standby
+const introducir = introduceDatos();
+
+introducir.next(); //Instancia el Symbol.Iterator Object
+introducir.next( "Hola!" );
+introducir.next( "Pedazo de cabrón" );
+ 
+
+
+/* +++++++++++ SET & MAP +++++++++++ */
+//En un "SET" cada elemento debe ser único
+let juegos = new Set( ['Mario Kart', 'Tekken', 'Zelda'] );
+console.log( juegos );
+
+juegos.add( 'Tetris' );
+console.log( juegos );
+
+juegos.delete( `Tekken` );//Quita el elemento pasado por parámetro
+console.log( juegos );
+
+juegos.clear();//Quita todos los element
+console.log( juegos );
+
+juegos.add( 'Mario Kart' );
+juegos.add( 'Tekken' );
+juegos.add( 'Zelda', );
+console.log( juegos );
+
+//Iterar con un for...0f
+for( elJuego of juegos ) { console.log( elJuego )};
+
+//.values() devuelve un objeto de tipo Symbol.Iterator
+let miIterador = juegos.values();
+console.log( miIterador );//-->SetIterator {"Mario Kart", "Tekken", "Zelda"}
+console.log( miIterador.next() );//-->{value: "Mario Kart", done: false}
+
+// WeakSet:
+let objeto1 = {
+	nombre: 'Jaime',
+	edad: 28,
+	titulos: {
+		colleage: "I.S.",
+		postgrade: "JavaScript"
+	}
+};
+let objeto2 = {
+	nombre: 'Lucho',
+ 	edad: 24
+};
+
+let People = new WeakSet( [objeto1, objeto2] ); //hace LIFO!!!
+console.log( People );
+
+People.delete( objeto2 );
+console.log( People );
+
+People.add( objeto2 );
+console.log( People );
+
+/* People.clear(); UNDEFINED*/
+
+People = null;
+console.log( People );
+
+
+
+//Las claves del Map (key) han de ser únicas
+let composicion = new Map();
+
+composicion.set( "1º", "Usuario" );
+composicion.set( "2º", "Yacimientos" );
+composicion.set( "3º", "Eventos" );
+
+console.log( composicion );
+
+console.log( composicion.has( "3º" ) );
+
+/* BABEL --> Herramienta de transpilación */
+
+
+</script>
+</body>
+</html>

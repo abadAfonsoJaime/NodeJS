@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>constructor</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width-device-width, initial-scale=1.0" />
+
+</head>
+
+<body>
+<noscript></noscript>
+
+<script>
+
+var vehículo = function(nombre, medio) { //clase Base: Superclase
+
+
+	this.nombre = nombre;
+	vehículo.prototype.medio = medio;
+	this.ruedas = false;
+	vehículo.prototype.alas = false;
+	vehículo.prototype.viaja = function()
+	{
+		document.write("recorre un trayecto")
+	}
+	this.arranca = function()
+	{
+		document.write("con motor de combustión")
+	}
+
+}
+
+var avion = new vehículo();
+avion.prototype = Object.create(vehículo.prototype);
+
+var barco = new vehículo();	
+
+/*var avion = function() {};
+
+for (clave in vehículo.prototype)
+	{
+		avion.prototype[clave] = vehículo.prototype[clave];
+	}*/
+
+	console.log(avion.alas);
+	console.log(avion.ruedas);
+	console.log(barco.ruedas);
+	console.log(barco.alas);
+
+
+</script>
+</body>
+</html>

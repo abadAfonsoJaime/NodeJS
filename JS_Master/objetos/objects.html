@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>perrodog</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width-device-width, initial-scale=1.0" />
+
+</head>
+
+<body>
+<noscript></noscript>
+
+<script>
+
+var perro = function() {};
+console.log(perro.prototype);
+
+perro.prototype.ladrar = function()
+	{
+		console.log("guau-guau"); //método del objeto perro
+	}
+
+var pastorAleman = new perro();
+var dogo = new perro();
+
+console.log("el pastor alemán hace:");
+pastorAleman.ladrar();
+console.log("el dogo hace:");
+dogo.ladrar();
+
+
+/*++++++++++++++ SOBRECARGA ++++++++++++++*/
+
+var dog = function() {}; //declarar la función constructor VACÍO de nombre dog
+
+dog.prototype.colorDePelo = function()//Añadir un método al prototipo del constructor dog
+{
+	document.write("marrón.<br/>");
+}
+
+//Instaciación de objetos a través del constructor dog
+var boxer = new dog();
+var labrador = new dog();
+
+//Llamada al método colorDePelo del objeto boxer accesible a través del prototype del constructor dog
+document.write("el boxer sin sobrecargar tiene el pelo de color ");
+boxer.colorDePelo();
+
+//Modificación (sobrecarga) del método colorDePelo para el objeto boxer
+boxer.colorDePelo = function()
+{
+	document.write("marrón y blanco.<br/>")
+}
+//llamada al método colorDePelo (sobrecargado) del objeto boxer
+document.write("el boxer sobrecargado tiene el pelo de color ");
+boxer.colorDePelo();
+//llamada al método colorDePelo (no sobrecargado) del objeto labrador
+document.write("el labrador tiene el pelo de color ");
+labrador.colorDePelo();
+
+dog.prototype.velocidadMaxima = function() //Añadir un método nuevo (sobrecarga) accesible a través del prototipo del constructor dog
+{
+	document.write("40 kilómetros por hora.<br/>");
+}
+
+
+var galgo = new dog();
+
+document.write("el boxer corre a ");
+boxer.velocidadMaxima();
+
+document.write("el labrador corre a ");
+labrador.velocidadMaxima();
+
+document.write("el galgo corre a ");
+galgo.velocidadMaxima();
+</script>
+
+
+</body>
+</html>

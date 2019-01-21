@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>corsa</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width-device-width, initial-scale=1.0" />
+
+</head>
+
+<body>
+<noscript></noscript>
+
+<script>
+
+var miCoche = new Object();
+miCoche.marca = "Opel";
+miCoche["modelo"] = "Corsa";
+miCoche.año = 2002;
+
+miCoche.conductores = {
+	"first" : "Jaime",
+	second : "Sonsoles",
+	["third"] : "Lucho",
+};
+
+console.log(miCoche.conductores["second"]);
+console.log(miCoche["conductores"]["third"]);
+console.log(miCoche["conductores"].first);
+console.log(miCoche["marca"]);
+console.log(miCoche.modelo);
+
+function mostrarDatosObjeto(miCoche){
+	var resultado ="";
+	for (var i in miCoche)
+	{
+		if (miCoche.hasOwnProperty(i))
+			resultado += "miCoche." + i + " = " + miCoche[i] + "\n";
+	}
+	return resultado;
+}
+
+function listarTodasLasPropiedaes(miCoche){
+	var properties;
+	var resultado = [];
+	for ( properties = miCoche; properties !== null; properties = Object.getPrototypeOf(properties) )
+	{
+		resultado = resultado.concat(Object.getOwnPropertyNames(properties)) + "\n";
+	}
+	return resultado;
+}
+
+console.log(mostrarDatosObjeto(miCoche));
+console.log(listarTodasLasPropiedaes(miCoche));
+
+console.log(Object.keys(miCoche));
+document.write(Object.keys(miCoche) + "\n");
+
+console.log(Object.getOwnPropertyNames(miCoche));
+document.write(Object.getOwnPropertyNames(miCoche).sort());
+console.log(Object.getOwnPropertyNames(miCoche).sort());
+
+
+var clavePropiedad = "motor";
+var valor = "1.200 cc gasolina";
+miCoche[clavePropiedad] = valor;
+
+console.log(mostrarDatosObjeto(miCoche));
+
+var Accent = new miCoche();
+console.log(Accent.modelo);
+</script>
+</body>
+</html>

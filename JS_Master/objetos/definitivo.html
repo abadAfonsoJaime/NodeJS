@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>JavaScript Project</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body>
+
+<h1>ejemplos de polimorfismo</h1>
+	<script>
+
+		/* Cuando se construye un objeto se le dan unos valores propios predeterminados --> los parámetros*/
+
+		function Persona( elNombre, laEdad ) {
+			//Atributos
+			this.nombre = elNombre;
+			this.edad = laEdad;
+
+			//Métodos
+			this.decirNombre = function() {
+				return this.nombre;
+
+			}
+
+		}
+
+		var persona1 = new Persona( "Jaime", 28 );
+		console.log (persona1.nombre); //Malas prácticas (me paso los principios de la POO por el culo)
+		console.log( persona1.decirNombre() ); //forma correcta
+
+		var persona2 = new Persona ( "David", 36 );
+		console.log( persona2.decirNombre() );
+		//Cambiar el nombre a Goliat
+
+		Persona.prototype.cambiarNombre = function( nuevoNombre ) {
+			this.nombre = nuevoNombre;
+		};
+
+		persona2.cambiarNombre( "Max Power" );
+		console.log( persona2.decirNombre() );
+
+		Persona.prototype.especie = "humano";
+
+		var persona3 = new Persona( "Eustaquio", 75 );
+
+		console.log( persona3.especie );
+		console.log( persona1.especie );
+		console.log( persona3.decirNombre() );
+		
+		persona3.cambiarNombre( "Rigoberto" );
+		console.log( persona3.decirNombre() );
+
+		Persona.prototype.nombre = "Pepe"; //No se puede
+
+/*+++++++++++++++ HERENCIA +++++++++++++++*/
+//Yo soy el prototipo de mi hijo
+//Mi padre es mi prototipo
+
+
+
+/*console.log( jedi1.decirNombre() );
+
+jedi1.prototype.fuerza = 10;
+console.log(jedi1.fuerza);
+*/
+
+function Jedi(nombre, edad, fuerza) {//Equivalente al extends
+	Persona.call(this, nombre, edad); //llamo al constructor de persona
+	this.fuerza = fuerza;
+}
+
+var jedi1 = new Jedi("Obi Wan", 45, 72);
+console.log(jedi1.fuerza);
+console.log(jedi1.decirNombre());//Heredado porque está definido en el this del constructor superclass
+console.log(jedi1.especie);//No heredado porque está en el prototipo
+
+
+
+//Yo (Persona) soy el prototipo de mi hijo (Jedi)
+//Mi padre es mi prototipo
+
+Jedi.prototype = Object.create(Persona.prototype);
+
+/*jedi1.cambiarNombre("Obi Juan Que no ve");*///ERROR!!
+
+console.log(jedi1.especie);//UNDEFINED cuando definí jedi1 no estaba instanciado el prototipo del Jedi
+
+
+var jedi2 = new Jedi("Anakin", 21, 69);
+console.log(jedi2.decirNombre());
+jedi2.cambiarNombre("Darth Bader");
+console.log(jedi2.decirNombre());
+console.log(jedi2.especie);
+
+function Resistencia( nombre, edad, poder ) {
+	Persona.call( this, nombre, edad )
+	this.poder = poder;
+}
+
+Resistencia.prototype = new Persona;
+Resistencia.prototype.constructor = Resistencia;
+
+var miembro = new Resistencia ( "Vicente Fuentes", 28, 75);
+console.log( miembro.decirNombre() );
+miembro.cambiarNombre( "JL" );
+console.log( miembro.decirNombre() );
+
+/* ++++++ herencia de JSON ++++++ */
+
+borregoJSON = {
+	informado : "mass-mierda",
+	idolos : "famosos",
+	fe : "políticos, farmafia, etc-",
+	changeBorrego : function( nombre ) {
+		this.nombre = nombre;
+	}
+}
+
+function BorregoMatrix( nombre, edad ) {
+	Persona.call(this, nombre, edad);
+}
+
+Object.setPrototypeOf( BorregoMatrix.prototype, borregoJSON );
+
+var ciudadanoEjemplar = new BorregoMatrix( "sumiso", 53 );
+
+console.log( ciudadanoEjemplar.informado );
+console.log( ciudadanoEjemplar.decirNombre() );
+ciudadanoEjemplar.changeBorrego( "siervo" );
+console.log( ciudadanoEjemplar.decirNombre() );
+
+
+
+class Cat { 
+  constructor(name) {
+    this.name = name;
+  }
+  
+  speak() {
+    console.log(this.name + ' makes a noise.');
+  }
+}
+
+class Lion extends Cat {
+  speak() {
+    super.speak();
+    console.log(this.name + ' roars.');
+  }
+}
+
+var otro = new Lion('Fuzzy');
+otro.speak(); //Fuzzy makes a noise.
+			//Fuzzy roars.
+	</script>
+
+</body>
+</html>

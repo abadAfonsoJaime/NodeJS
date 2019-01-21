@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>class</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width-device-width, initial-scale=1.0" />
+
+</head>
+
+<body>
+<noscript></noscript>
+
+<script>
+
+class MyDate extends Date {
+	constructor() {
+		super();
+	}
+
+	getFormattedDate() {
+		var meses = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+		return this.getDate() + "-" + months[this.getMonth()] + "-" + this.getFullYear();
+	}
+}
+
+
+class Coche {
+	constructor( marca, modelo, pais ) {
+		this.marca = marca;
+		this.modelo = modelo;
+		this.pais = pais;
+	}
+
+	mostrarCoche() {
+		return 	`
+		La marca del coche es: ${this.marca}
+		El modelo es: ${this.modelo}
+		El pais de origen es: ${this.pais}
+		`;
+	}
+}
+
+const miCoche = new Coche( "Hyundai", "accent", "Japón" );
+console.log( miCoche.mostrarCoche() );
+
+class CocheDeportivo extends Coche {
+	constructor( marca, modelo, pais, velocMaxima ) {
+		super( marca, modelo, pais );
+		this.velocMaxima = velocMaxima;
+	}
+//Llamada a un método del padre en la declaración del hijo:
+//.super
+	mostrarCocheDeportivo() {
+		return  super.mostrarCoche() + `Su velocidad punta es: ${this.velocMaxima}`;
+	}
+}
+
+const miCocheDeportivo = new CocheDeportivo( "Ferrari", "Testarrosa", "Italia", "320 Km/h");
+console.log(  miCocheDeportivo.mostrarCocheDeportivo() );
+///Sin llamar al métodod del padre
+/*console.log( miCocheDeportivo.mostrarCoche() + miCocheDeportivo.mostrarCocheDeportivo());*/
+
+
+
+
+class Rectangle {
+	constructor( height, width ) {
+		this.name = "Rectangle";
+		this.height = height;
+		this.width = width;
+	}
+	
+	perimetro() { //Method
+		return ( this.height*2 + this.width*2 );
+	}
+
+	get perimeter() { //Getter
+		return this.perimetro();
+	}
+
+	get diagonal() { //Getter
+		return Math.sqrt( (this.height**2) + (this.width*this.width) );
+	}
+
+	get sayPolygonName() { //Getter
+		return ( "Hi, I am a " + this.name );
+	}
+
+	get superficie() { //Getter
+		return this.height * this.width;
+	}
+/*	set color(value) {
+		return this.color = value;
+	}*/
+}
+
+var miPoligono = new Rectangle(5, 8);
+console.log( miPoligono.sayPolygonName );
+console.log( miPoligono.superficie );
+console.log( miPoligono.diagonal );
+console.log( miPoligono.perimeter );
+
+
+
+class Square extends Rectangle {
+	constructor( length ) { 
+		super(length, length);
+		this.name = "Square";
+	}
+	set newArea( value ) {
+		return this.height = this.width = Math.sqrt(value);
+	}
+}
+
+
+
+
+
+var miCuadrado = new Square(5);
+console.log( miCuadrado.name );
+console.log( miCuadrado.width );
+console.log( miCuadrado.height );
+console.log( miCuadrado.perimeter );
+
+miCuadrado.newArea = 36;
+console.log(miCuadrado.superficie);
+console.log( miCuadrado.width );
+console.log( miCuadrado.height );
+
+console.log( miCuadrado.perimetro() );
+console.log( miCuadrado.perimetro );
+console.log( miCuadrado.perimeter );
+
+
+/*Object.setPrototypeOf(Square.prototype, Rectangle.prototype);*/
+
+Object.setPrototypeOf(Cuadrilatero.prototype, Rectangle);
+
+function Cuadrilatero(M, m){
+	this.name = "Cuadrilatero"
+}
+
+var miCuadrilatero = new Cuadrilatero();
+
+console.log( miCuadrilatero.perimeter );
+
+class Point {
+	constructor(x, y) {
+		this.x = x;
+		this.y = y;
+	}
+	static distancia(a, b) {
+		const dx = a.x - b.x;
+		const dy = a.y - b.y
+		return Math.hypot(dx, dy);
+	}
+}
+
+const p1 = new Point(5, 5);
+const p2 = new Point(9, 8);
+console.log(Point.distancia(p1, p2));
+
+
+</script>
+
+
+</body>
+</html>

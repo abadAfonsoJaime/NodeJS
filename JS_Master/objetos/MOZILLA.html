@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>perros</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width-device-width, initial-scale=1.0" />
+
+</head>
+
+<body>
+<noscript></noscript>
+
+<script>
+
+class Rectangle {
+	constructor(height, width) {
+		this.name = "Rectangle";
+		this.height = height;
+		this.width = width;
+	}
+	sayName() {
+		console.log("Hi, I am a " + this.name)
+	}
+	get area() {
+		return this.height * this.width;
+	}
+	set area(value) {
+		value = this.height * this.width;
+	}
+}
+
+class Square extends Rectangle {
+	constructor(lado) {
+		super(lado, lado);
+		this.name = "Square";
+	}
+	set area(value) {
+		this.height = this.width = Math.sqrt(value);
+	}
+}
+
+
+class Point {
+	constructor(x, y) {
+		this.x = x;
+		this.y = y;
+	}
+	static distancia(a, b) {
+		const dx = a.x - b.x;
+		const dy = a.y - b.y
+		return Math.hypot(dx, dy);
+	}
+}
+
+const p1 = new Point(5, 5);
+const p2 = new Point(9, 8);
+console.log(Point.distancia(p1, p2));
+
+class Triangulo {
+	constructor() {}
+	static logNbSides() {
+		return "I have 3 sides";
+	}
+}
+
+class Isosceles extends Triangulo {
+	constructor() {}
+	static logDescription() {
+		return super.logNbSides() + " being two of them equal.";
+	}
+}
+</script>
+
+
+</body>
+</html>

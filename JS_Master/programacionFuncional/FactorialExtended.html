@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Factorial!</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width-device-width, initial-scale=1.0" />
+
+</head>
+
+<body>
+<noscript></noscript>
+
+<script>
+
+
+
+/* +++++++++++++++ Inicialización (introducción con el teclado) +++++++++++++++ */ 
+number = parseFloat(prompt("Calcular el factorial del número:"));
+grito = (prompt("Introduzca la letra, palabra o frase a gritar:"));
+/* +++++++++++++++ PROCESS +++++++++++++++ */
+function factorial( numero )
+{
+	if( numero === 0 )
+		return 1;
+	else
+	{
+		return numero * factorial( numero -1 );
+	}
+}
+
+function gritar( num, letra )
+{
+	if( num === 1 )
+		return letra + letra + "!";
+	else
+			return letra + letra + gritar(num-1, letra);
+}
+
+function multipop( listaArray, golpes)
+{
+	if(golpes === 1)
+		{listaArray.pop();
+		return listaArray;}
+	else
+		{listaArray.pop();
+			return multipop(listaArray, golpes-1);}
+}
+
+
+function gritarFactorial( num, letra )
+{
+	if( num === 1 )
+		return letra.repeat(number) + "!";
+	else
+			return letra.repeat(number) + "<br/>" + gritar(num-1, letra) + "<br/>";
+}
+
+/* +++++++++++++++ OUTPUT +++++++++++++++ */
+document.write("el factorial de " + number + " es: " + factorial (number) + "<br/>");
+document.write("<br/>" + gritarFactorial(number, grito.toUpperCase()))
+
+console.log(gritar(3, "Putón"))
+console.log(multipop([1, 2, 3, 4], 2));
+
+
+
+</script>
+
+</body>
+</html>

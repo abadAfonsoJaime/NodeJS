@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>constructor</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width-device-width, initial-scale=1.0" />
+
+</head>
+
+<body>
+<noscript></noscript>
+
+<script>
+
+var perro = function()
+{ //función constructor de nombre perro
+	this.tienePelo = true; // atributo del objeto perro
+	this.ladrar = function()
+	{
+		console.log( "guau-guau" ); //método del objeto perro
+	}
+	var edad = 7;
+};
+
+var pastorAleman = new perro();
+var dogo = new perro();
+
+/* console.log("el perro hace: " + pastorAleman.ladrar()); --> el perro hace: Undefined*/
+/*console.log("el perro hace: " + pastorAleman.ladrar);  --> el perro hace: código del método ladrad()*/
+
+/* Dentro de un console log solo puedo meter atributos, los métodos van fuera */
+console.log( "el perro hace: " );
+pastorAleman.ladrar();
+console.log(pastorAleman.edad); //UNDEFINED
+
+
+if (pastorAleman.ladrar() === dogo.ladrar())
+ {
+ 	console.log( "método ladrar compartido por los objetos pastorAleman y dogo" );
+ }
+ else
+ {
+ 	console.log( "método ladrar NO compartido por los objetos pastorAleman y dogo" );
+ }
+
+if (pastorAleman.ladrar === dogo.ladrar)
+ {
+ 	console.log("método ladrar compartido por los objetos pastorAleman y dogo");
+ }
+ else
+ {
+ 	console.log("método ladrar NO compartido por los objetos pastorAleman y dogo");
+ }
+
+
+function dog( raza )
+{
+	this.raza = raza;				// atributo del objeto perro
+	this.tienePelo = true;			// atributo del objeto perro
+	this.ladrar = function()		//método del objeto perro
+	{
+		console.log( "guau-guau" ); 
+	}
+}
+
+var miPerro = new dog( "bulldog" );
+var otroPerro = new dog( "dogo" );
+
+console.log( "tengo un perro de raza " + miPerro.raza + " que hace: " );
+miPerro.ladrar();
+
+console.log( "pero hay otro perro de raza " + otroPerro.raza+ " que también hace: " );
+otroPerro.ladrar();
+
+if (miPerro.ladrar === otroPerro.ladrar)
+ {
+ 	console.log( "método ladrar compartido por los objetos miPerro y otroPerro" );
+ }
+ else
+ {
+ 	console.log( "método ladrar NO compartido por los objetos miPerro y otroPerro" );
+ }
+/*¿¿¿Why does not work???  =S*/
+class tercerPerro extends dog {
+	ladrar()	{
+		console.log( "rggghhh-guau!" ); 
+	}
+}
+
+console.log( "el tercer perro hace:" );
+tercerPerro.ladrar();
+
+</script>
+
+
+</body>
+</html>

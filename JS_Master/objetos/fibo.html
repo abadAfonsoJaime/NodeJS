@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Fibonacci</title>
+
+	<link rel="stylesheet" type="text/css" href="css/myStyleSheet.css">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body>
+
+
+<script>
+
+
+
+	for (var i = 0; i < 6; i++)
+	{
+		var resultado;
+		var fibonacci = new Array();
+		
+		if (i === 0 || i === 1)
+			 	{
+			 		resultado = 1;
+					fibonacci.push(resultado);
+			 	}
+			 		else
+			 		{
+			  			resultado = fibonacci[i-1] + fibonacci[i-2];
+			  			fibonacci.push(resultado);
+			 		}
+			 			   	
+			  document.write(resultado);
+	}
+
+	console.log(fibonacci);
+</script>
+
+</body>
+</html>

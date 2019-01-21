@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CALCULADORA</title>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width-device-width, initial-scale=1.0" />
+
+</head>
+
+<body>
+<noscript></noscript>
+
+<script>
+
+//SIN FUNCION PURA
+var encendido = 0;
+function alternar() {
+  encendido = (encendido === 1) ? 0: 1;
+}
+
+alternar();
+
+//CON FUNCION PURA
+
+var encendido = 0;
+function alternar(estado) {
+  return (estado === 1) ? 0: 1;
+}
+
+//Cambiar el interruptor
+encendido = alternar(encendido);
+
+
+/* CLOSURE EXAMPLE: función dentro de otra que accede a una variable de la función padre */
+function Calculadora(arguments, operación) { //los tres parámetro forman parte del entorno de las funciones closure
+
+  var resultado = 0;
+
+  function sumar() { //Closure
+      for (i=0; i < arguments.length; i++)
+       {
+        resultado += arguments[i];
+       }
+  }
+
+  function restar() { //Closure
+    for (i=0; i < arguments.length; i++)
+       {
+        resultado -= arguments[i];
+       }
+  }
+
+  function multiplicar() { //Closure
+    resultado = num1 * num2;
+  }
+
+  function dividir() { //Closure
+    resultado = num1 / num2;
+  }
+
+  function error() {
+    resultado = "Aún no hemos implementado esa operación";
+  }
+
+  switch ( operación )
+  {
+    case "SUMAR":
+    sumar();
+    break;
+
+    case "RESTAR":
+    restar();
+    break;
+
+    case "MULTIPLICAR":
+    multiplicar();
+    break;
+
+    case "DIVIDIR":
+    dividir();
+    break;
+
+    default:
+    error();
+  }
+
+return resultado;
+
+}
+
+console.log( Calculadora(2, 3, "SUMAR"));
+console.log( Calculadora(2, 3, "MULTIPLICAR"));
+
+</script>
+
+</body>
+</html>
