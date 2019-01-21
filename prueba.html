@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>prueba</title>
+
+	<script
+	  src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+	  integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="
+	  crossorigin="anonymous">		  	
+	</script>
+</head>
+<body>
+	<script>
+
+		
+		const matriz   = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
+		const calculoP = (a) => new Promise(resolve => setTimeout(
+			() => resolve(a * a - 1), Math.random() * 100));
+
+		function orderData(array) {
+			let data = [];
+			let i = 0;
+			while ( i < matriz.length ) {
+				$.when( calculoP(matriz[i]) ).done( (response) => {
+                    data.push(response);
+                    const numberSorter = (a, b) => a - b;
+					data.sort(numberSorter);
+                });
+                
+                i++;
+			}
+
+			return data;
+		}
+
+		console.log( orderData() );
+
+
+	</script>
+</body>
+</html>
