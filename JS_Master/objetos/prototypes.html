@@ -12,21 +12,20 @@
 
 		/* Cuando se construye un objeto se le dan unos valores propios predeterminados --> los parámetros*/
 
-		function Persona( elNombre, laEdad ) {
+		function Persona( _elNombre, _laEdad ) {
 			//Atributos
-			this.nombre = elNombre;
-			this.edad = laEdad;
+			this.nombre = _elNombre;
+			this.edad = _laEdad;
 
 			//Métodos
 			this.decirNombre = function() {
 				return this.nombre;
-
 			}
 
 		}
 
 		var persona1 = new Persona( "Jaime", 28 );
-		console.log (persona1.nombre); //Malas prácticas (me paso los principios de la POO por el culo)
+		console.log (persona1.nombre); //Malas prácticas me paso los principios de la POO por el culo)
 		console.log( persona1.decirNombre() ); //forma correcta
 
 		var persona2 = new Persona ( "David", 36 );
@@ -44,8 +43,8 @@
 
 		var persona3 = new Persona( "Eustaquio", 75 );
 
-		console.log( persona3.especie );
-		console.log( persona1.especie );
+		console.log( persona3.especie ); // humano
+		console.log( persona1.especie ); // humano
 		console.log( persona3.decirNombre() );
 		
 		persona3.cambiarNombre( "Rigoberto" );
@@ -65,15 +64,16 @@ jedi1.prototype.fuerza = 10;
 console.log(jedi1.fuerza);
 */
 
-function Jedi(nombre, edad, fuerza) {//Equivalente al extends
-	Persona.call(this, nombre, edad); //llamo al constructor de persona
-	this.fuerza = fuerza;
+function Jedi( _nombre, _edad, _fuerza ) {//Equivalente al extends
+
+	Persona.call(this, _nombre, _edad); //llamo al constructor de persona
+	this.fuerza = _fuerza;
 }
 
 var jedi1 = new Jedi("Obi Wan", 45, 72);
 console.log(jedi1.fuerza);
-console.log(jedi1.decirNombre());//Heredado porque está definido en el this del constructor superclass
-console.log(jedi1.especie);//No heredado porque está en el prototipo
+console.log( jedi1.decirNombre() ); // Heredado porque está definido en el this del constructor superclass
+console.log(jedi1.especie); // No heredado porque está en el prototipo
 
 
 
@@ -84,24 +84,28 @@ Jedi.prototype = Object.create(Persona.prototype);
 
 /*jedi1.cambiarNombre("Obi Juan Que no ve");*///ERROR!!
 
-console.log(jedi1.especie);//UNDEFINED cuando definí jedi1 no estaba instanciado el prototipo del Jedi
+console.log(jedi1.especie); // UNDEFINED cuando instancié jedi1 NO estaba seteado el prototipo del Jedi
 
 
 var jedi2 = new Jedi("Anakin", 21, 69);
-console.log(jedi2.decirNombre());
+console.log( jedi2.decirNombre() );
 jedi2.cambiarNombre("Darth Bader");
-console.log(jedi2.decirNombre());
-console.log(jedi2.especie);
+console.log( jedi2.decirNombre() );
+console.log( jedi2.especie ); // humano --> cuando instancié jedi2 SI estaba seteado el prototipo del Jedi
 
-function Resistencia( nombre, edad, poder ) {
-	Persona.call( this, nombre, edad )
-	this.poder = poder;
+
+
+
+
+function Resistencia( _nombre, _edad, _poder ) {
+	Persona.call( this, _nombre, _edad )
+	this.poder = _poder;
 }
 
 Resistencia.prototype = new Persona;
 Resistencia.prototype.constructor = Resistencia;
 
-var miembro = new Resistencia ( "Vicente Fuentes", 28, 75);
+var miembro = new Resistencia ( "Vicente Fuentes", 28, 75 );
 console.log( miembro.decirNombre() );
 miembro.cambiarNombre( "JL" );
 console.log( miembro.decirNombre() );
@@ -112,13 +116,13 @@ borregoJSON = {
 	informado : "mass-mierda",
 	idolos : "famosos",
 	fe : "políticos, farmafia, etc-",
-	changeBorrego : function( nombre ) {
-		this.nombre = nombre;
+	changeBorregoName : function( _nombre ) {
+		this.nombre = _nombre;
 	}
 }
 
-function BorregoMatrix( nombre, edad ) {
-	Persona.call(this, nombre, edad);
+function BorregoMatrix( _nombre, _edad ) {
+	Persona.call(this, _nombre, _edad);
 }
 
 Object.setPrototypeOf( BorregoMatrix.prototype, borregoJSON );
@@ -127,31 +131,32 @@ var ciudadanoEjemplar = new BorregoMatrix( "sumiso", 53 );
 
 console.log( ciudadanoEjemplar.informado );
 console.log( ciudadanoEjemplar.decirNombre() );
-ciudadanoEjemplar.changeBorrego( "siervo" );
+ciudadanoEjemplar.changeBorregoName( "siervo" );
 console.log( ciudadanoEjemplar.decirNombre() );
 
 
 
 class Cat { 
-  constructor(name) {
-    this.name = name;
+  constructor(_name) {
+    this.name = _name;
   }
   
   speak() {
-    console.log(this.name + ' makes a noise.');
+    console.log(this.name + ' maulla.');
   }
 }
 
 class Lion extends Cat {
   speak() {
     super.speak();
-    console.log(this.name + ' roars.');
+    console.log( `${this.name} roars.`);
   }
 }
 
 var otro = new Lion('Fuzzy');
-otro.speak(); //Fuzzy makes a noise.
-			//Fuzzy roars.
+otro.speak(); 
+//Fuzzy makes a noise.
+//Fuzzy roars.
 	</script>
 
 </body>

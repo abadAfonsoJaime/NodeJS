@@ -9,87 +9,204 @@
 </head>
 
 <body>
+	<h1 id="title">Classes</h1>
+
 <noscript></noscript>
 
-<script>
+<script type="text/javascript">
 
-var perro = function()
-{ //función constructor de nombre perro
-	this.tienePelo = true; // atributo del objeto perro
-	this.ladrar = function()
-	{
-		console.log( "guau-guau" ); //método del objeto perro
-	}
-	var edad = 7;
-};
-
-var pastorAleman = new perro();
-var dogo = new perro();
 
 /* console.log("el perro hace: " + pastorAleman.ladrar()); --> el perro hace: Undefined*/
 /*console.log("el perro hace: " + pastorAleman.ladrar);  --> el perro hace: código del método ladrad()*/
-
 /* Dentro de un console log solo puedo meter atributos, los métodos van fuera */
-console.log( "el perro hace: " );
-pastorAleman.ladrar();
-console.log(pastorAleman.edad); //UNDEFINED
 
 
-if (pastorAleman.ladrar() === dogo.ladrar())
- {
- 	console.log( "método ladrar compartido por los objetos pastorAleman y dogo" );
- }
- else
- {
- 	console.log( "método ladrar NO compartido por los objetos pastorAleman y dogo" );
- }
+/***
+	*
+	* the Basics 
+	*
+***/
+class Rectangle {
+	// Setup
+	constructor( _width, _height, _color) {
+		console.log( "The Rectangle is being created!");
 
-if (pastorAleman.ladrar === dogo.ladrar)
- {
- 	console.log("método ladrar compartido por los objetos pastorAleman y dogo");
- }
- else
- {
- 	console.log("método ladrar NO compartido por los objetos pastorAleman y dogo");
- }
+		this.width = _width;
+		this.height = _height;
+		this.color = _color;
+	}
 
+	getArea() {
+		return this.width * this.height;
+	}
 
-function dog( raza )
-{
-	this.raza = raza;				// atributo del objeto perro
-	this.tienePelo = true;			// atributo del objeto perro
-	this.ladrar = function()		//método del objeto perro
-	{
-		console.log( "guau-guau" ); 
+	printDescription() {
+		console.log(`I am a Rectangle of ${this.width} and ${this.height} and I am ${this.color}`)
 	}
 }
 
-var miPerro = new dog( "bulldog" );
-var otroPerro = new dog( "dogo" );
 
-console.log( "tengo un perro de raza " + miPerro.raza + " que hace: " );
-miPerro.ladrar();
+let myRectanlge1 = new Rectangle(3, 5, "blue");
+console.log( myRectanlge1.getArea() );
+myRectanlge1.printDescription();
 
-console.log( "pero hay otro perro de raza " + otroPerro.raza+ " que también hace: " );
-otroPerro.ladrar();
 
-if (miPerro.ladrar === otroPerro.ladrar)
- {
- 	console.log( "método ladrar compartido por los objetos miPerro y otroPerro" );
- }
- else
- {
- 	console.log( "método ladrar NO compartido por los objetos miPerro y otroPerro" );
- }
-/*¿¿¿Why does not work???  =S*/
-class tercerPerro extends dog {
-	ladrar()	{
-		console.log( "rggghhh-guau!" ); 
+
+/***
+	*
+	* Getters and Setters 
+	*
+***/
+class Square {
+	// Setup
+	constructor( _width ) {
+
+		this.width = _width;
+		this.height = _width;
+		this.numberOfRequestsForArea = 0;
+	}
+
+	get area() {
+		this.numberOfRequestsForArea++;
+		return this.width ** 2;
+	}
+
+	set area( _area ) {
+		this.width = Math.sqrt( _area );
+		this.height = this.width;
 	}
 }
 
-console.log( "el tercer perro hace:" );
-tercerPerro.ladrar();
+let mySquare1 = new Square(4);
+
+mySquare1.area = 25;
+console.log( `The new area is ${mySquare1.area} and the new width is ${mySquare1.height}`);
+
+console.log( mySquare1.area );
+console.log( mySquare1.area );
+console.log( mySquare1.area );
+console.log( mySquare1.numberOfRequestsForArea );
+
+/***
+	*
+	* Static Methods 
+	*
+***/
+class Cuadrado {
+	
+	constructor( _width ) {
+		this.width = _width;
+		this.height = _width;
+	}
+
+	static equals(a, b) {
+		return a.width * a.height === b.width * b.height;
+	}
+
+	static isValidDimensions( width, height ) {
+		return width === height;
+	}
+}
+
+let miCuadrado1 = new Cuadrado(7);
+let miCuadrado2 = new Cuadrado(8);
+
+console.log( Cuadrado.equals(miCuadrado1, miCuadrado2) );
+/* Static Methods are defined on a class, but actually they are not part of te instantiated Object */
+console.log( Cuadrado.isValidDimensions(6, 6) );
+
+/***
+	*
+	* Inheritance --> Extends
+	*
+***/
+class Person {
+
+	constructor( _name, _age ) {
+		this.age = _age;
+		this.name = _name;		
+	}
+
+	describe() {
+		console.log(`I am ${this.name} and I am ${this.age} years old`)
+	}
+}
+
+class Programmer extends Person {
+
+	constructor( theName, theAge, _yearsOfExperience ) {
+		// call parent constructor
+		super(theName, theAge);
+		// custom behaviour
+		this.yearsOfExperience = _yearsOfExperience;
+	}
+
+	code() {
+		console.log(`${this.name} is coding`);
+	}
+}
+
+let person1 = new Person( "Lucho", 25 );
+let programer1 = new Programmer( "Jaime", 29, 1 );
+
+console.log(person1);
+console.log(programer1);
+
+programer1.code();
+programer1.describe();
+
+
+const programersArray = [
+	new Programmer("David", 32, 7),
+	new Programmer("Ramón", 28, 4)
+];
+function developSoftware(programers) {
+	// Develop software
+	for (let i of programers) {
+		i.code();
+	}
+}
+developSoftware(programersArray)
+
+
+
+/***
+	*
+	* Polymorphism
+	*
+***/
+// The art of redifining a method inside of a class
+
+class Animal {
+
+	constructor( _name ) {
+		this.name = _name;
+	}
+
+	makeSound() {
+		console.log( `Generic Animal Sound!` );
+	}
+}
+
+const a1 = new Animal("Toby");
+a1.makeSound();
+
+class Dog extends Animal {
+
+	constructor(dogName) {
+		super(dogName);
+	}
+
+	makeSound() {
+		super.makeSound();
+		console.log("Woauf Woauf");
+	}
+}
+
+const a2 = new Dog("Gooffy");
+a2.makeSound();
+
+
 
 </script>
 

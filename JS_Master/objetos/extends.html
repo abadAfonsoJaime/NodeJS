@@ -2,14 +2,12 @@
 <html>
 <head>
 	<title>class</title>
-
 	<meta charset="utf-8">
 	<meta name="viewport" content="width-device-width, initial-scale=1.0" />
-
 </head>
-
+<h1>clases</h1>
 <body>
-<noscript></noscript>
+<noscript>etiqueta noscript</noscript>
 
 <script>
 
@@ -20,16 +18,16 @@ class MyDate extends Date {
 
 	getFormattedDate() {
 		var meses = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-		return this.getDate() + "-" + months[this.getMonth()] + "-" + this.getFullYear();
+		return this.getDate() + "-" + meses[this.getMonth()] + "-" + this.getFullYear();
 	}
 }
 
 
 class Coche {
-	constructor( marca, modelo, pais ) {
-		this.marca = marca;
-		this.modelo = modelo;
-		this.pais = pais;
+	constructor( _laMarca, _elModelo, _elPais ) {
+		this.marca = _laMarca;
+		this.modelo = _elModelo;
+		this.pais = _elPais;
 	}
 
 	mostrarCoche() {
@@ -45,9 +43,9 @@ const miCoche = new Coche( "Hyundai", "accent", "Japón" );
 console.log( miCoche.mostrarCoche() );
 
 class CocheDeportivo extends Coche {
-	constructor( marca, modelo, pais, velocMaxima ) {
-		super( marca, modelo, pais );
-		this.velocMaxima = velocMaxima;
+	constructor( _marca, _modelo, _pais, _velocMaxima ) {
+		super( _marca, _modelo, _pais );
+		this.velocMaxima = _velocMaxima;
 	}
 //Llamada a un método del padre en la declaración del hijo:
 //.super
@@ -84,15 +82,12 @@ class Rectangle {
 	}
 
 	get sayPolygonName() { //Getter
-		return ( "Hi, I am a " + this.name );
+		return `Hi, I am a ${this.name}`;
 	}
 
 	get superficie() { //Getter
 		return this.height * this.width;
 	}
-/*	set color(value) {
-		return this.color = value;
-	}*/
 }
 
 var miPoligono = new Rectangle(5, 8);
@@ -113,47 +108,32 @@ class Square extends Rectangle {
 	}
 }
 
-
-
-
-
 var miCuadrado = new Square(5);
 console.log( miCuadrado.name );
 console.log( miCuadrado.width );
 console.log( miCuadrado.height );
 console.log( miCuadrado.perimeter );
+console.log( miCuadrado.superficie );
 
 miCuadrado.newArea = 36;
 console.log(miCuadrado.superficie);
 console.log( miCuadrado.width );
 console.log( miCuadrado.height );
 
-console.log( miCuadrado.perimetro() );
-console.log( miCuadrado.perimetro );
-console.log( miCuadrado.perimeter );
+console.log( miCuadrado.perimetro() ); // METHOD --> 24
+console.log( miCuadrado.perimetro ); // function description --> security mistake
+console.log( miCuadrado.perimeter ); // GETTER --> 24
 
-
-/*Object.setPrototypeOf(Square.prototype, Rectangle.prototype);*/
-
-Object.setPrototypeOf(Cuadrilatero.prototype, Rectangle);
-
-function Cuadrilatero(M, m){
-	this.name = "Cuadrilatero"
-}
-
-var miCuadrilatero = new Cuadrilatero();
-
-console.log( miCuadrilatero.perimeter );
 
 class Point {
-	constructor(x, y) {
-		this.x = x;
-		this.y = y;
+	constructor(_x, _y) {
+		this.x = _x;
+		this.y = _y;
 	}
-	static distancia(a, b) {
-		const dx = a.x - b.x;
-		const dy = a.y - b.y
-		return Math.hypot(dx, dy);
+	static distancia(_a, _b) {
+		const dx = _a.x - _b.x;
+		const dy = _a.y - _b.y
+		return `Los puntos instanciados están a ${Math.hypot(dx, dy)} unidades de distancia`;
 	}
 }
 
