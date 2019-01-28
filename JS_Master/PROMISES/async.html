@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<script
+	  	src="https://code.jquery.com/jquery-3.3.1.js"
+	  	integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+	  	crossorigin="anonymous">		  	
+	</script>
+	<script
+		src="index.js">
+	</script>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<button id="btn"> good callback 
+		
+	</button>
+	<button class="omg"> dark side callback 
+		
+	</button>
+	<script>
+
+	/*CALLBACK*/
+	function add(x, y) {
+		return x + y
+	}
+
+	function higherOrderFunction(x, callback) {
+		return callback(x, 5)
+	}
+
+	var resultado = higherOrderFunction(10, add);
+
+	/*[1,2,3].map(
+		(i) => i + 5
+	);*/
+
+	$('#btn').on('click', () => 
+		document.write("Callbacks are everywheree")
+	);
+
+	console.log(resultado);
+
+	/*
+		most of the apps don't have all the data they need up front. 
+		Instead, they need to fetch external data as the user interacts with the app. 
+		We've just seen how callbacks can be a great use case for this because, again,
+		they allow you to "delay execution of a function until a particular time".
+	*/
+
+	const id = 'tylermginnis';
+
+	$.getJSON({
+		url: `https://api.github.com/users/${id}`,
+		success: updateUI,
+		error: showError
+	})
+	/*
+		If the requests succeeds, go ahead and call success passing it the user's data.
+		If it doesn't, go ahead and call error passing it the error object.
+	*/
+
+
+	// updateUI and  showError, getLocationURL are irrelevant.
+	// Pretend they do what they sound like.
+	$('.omg').on('click', () => {
+		$.getJSON({
+			url: `https://api.github.com/users/${id}`,
+			success: (user) => {
+				$.getJSON({
+					url: getLocationURL( user.location.split(',') ),
+					success (weather) {
+						updateUI({
+							user,
+							weather: weather.query.results
+						})
+					},
+					error: showError,
+				})				
+			},
+			error: showError
+		})
+	})
+
+	/*
+		Notice we've added a few more layers of callbackas.
+		First we're saying don't run the initial AJAX request until the element is clicked.
+		Once the button is clicked, we make the request. If that request succeeds, 
+		we make a second request. If that request succeeds, we invoke the updateUI method
+		passing it the data we got from both requests. 
+		Regardless of if you understood the code at first glance or not, 
+		objectively it's much harder to read than teh code before.
+	*/
+
+
+
+
+	// MODULARIZING THE CODE
+	function getUser( id, onSuccess, onFailure ) {
+		$.getJSON({
+			url: getLocationURL( user.location.split(',') ),
+			success: onSuccess,
+			error: onFailure
+		})
+	}
+
+	$('#btn').on('click', () => {
+		getUser("tylermcginnis", (user) => {
+			getWeather( user, (weather) => {
+				updateUI({
+					user,
+					weather: weather.query.results
+				})
+			},
+			showError )
+		}, showError)
+	})
+
+
+	/*
+		If the async request is still ongoing, the Promise will have a status of pending. 
+		If the async request was successfully completed, the Promise will change to a status of fulfilled.
+		If the async request failed, the Promise will change to a status of rejected.
+	*/
+
+	// 1. How do you create a Promise
+	const promise = new Promise()
+
+	// 2. How do you change the status of a promise
+	const promise = new Promise( (resolve, reject) => {
+		setTimeout( () => {
+			resolve() // Change status to 'fulfilled'
+		}, 2000 )
+	})
+	console.log('Promise before being resolved - ', promise);
+
+	setTimeout( () => {
+		console.log('Promise after being resolved', promise)
+	}, 2000 )
+
+	// 3. How do you listen for when the status of a promise changes
+	function onSuccess() {
+		console.log('Success!');
+	}
+	function onError() {
+		console.log('shit')
+	}
+	const promise = new Promise((resolve, reject) => {
+		setTimeout(() => {
+			resolve()
+		}, 2000)
+	})
+	promise.then(onSuccess)
+	promise.catch(onError)
+
+	/*
+		When te status of the promise changes to fulfilled, the function that was passed to 
+		.then will get invoked. When the status of the promise changes to rejected,
+		the function that was passed to .catch will be invoked. What this means is that once
+		you create a promise, you'll pass the function you want to run if the async request 
+		is successful to .then. You'll pass the function you want to run if the async request
+		fails to .catch
+	*/
+	function onSuccess() {
+		console.log('Success!');
+	}
+	function onError() {
+		console.log('shit')
+	}
+	const promise = new Promise((resolve, reject) => {
+		setTimeout(() => {
+			reject()
+		}, 2000)
+	})
+	promise.then(onSuccess)
+	promise.catch(onError)
+	// This time instead of the onSuccess function being invoked, the onError function
+	// will be invoked since we called reject
+
+
+
+	/*
+		In order to use the Promise API instead of using callbacs 
+		we wrap our AJAX request inside of a promise
+	*/
+	function getUser(id) {
+		return new Promise((resolve, reject) => {
+			$.getJSON({
+				url: `https://api.github.com/users/${id}`,
+				success: resolve,
+				error: reject
+			})
+		})
+	}
+	/*
+		Notice that the parameters of getUser have changed because now we don't need the two
+		callback functions as we're no longer inverting control. Instead, we use the Promise's
+		resolve and reject functions
+	*/
+	function getWeather(user) {
+		return new Promise((resolve, reject) => {
+			$.getJSON({
+				url: getLocationURL( user.location.split(',') ),
+				success: resolve,
+				error: reject,
+			})
+		})
+	}
+	/*
+		Now we need to update our click handler to take the following flow:
+			1. Get the user's information from the Github API
+			2. Use the user's loaction to get their weather from the Yahoo Weather API
+			3. Update the UI with the users info and their weather
+	*/
+	$('#btn').on('click', () => {
+		const userPromise = getUser('tylermcginnis')
+
+		userPromise.then( (user) => {
+			const weatherPromise = getWeather(user)
+			weatherPromise.then( (weather) => {
+
+			})
+
+			weatherPromise.catch(showError)
+		})
+
+		userPromise.catch(showError)
+	})
+	/*
+		Notice we follow the exact same pattern we did in #1 but now we invoke getWeather
+		passing it the user object we got from userPromise
+	*/
+	$('#btn').on('click', () => {
+		const userPromise = getUser('tylermcginnis')
+
+		userPromise.then( (user) => {
+			const weatherPromise = getWeather(user)
+			weatherPromise.then( (wheather) => {
+				updateUI({
+					user,
+					weather: weather.query.results
+				})
+			})
+
+			weatherPromise.catch(showError)
+		})			
+
+		userPromise.catch(showError)
+	})
+	https://codesandbox.io/s/l9xrjq88p7
+	</script>
+</body>
+</html>

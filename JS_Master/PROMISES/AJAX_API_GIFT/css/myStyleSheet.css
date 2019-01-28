@@ -1,0 +1,18 @@
+body {
+	font-family: sans-serif;
+}
+
+.wrapper {
+	margin: 0 auto;
+	width: 480px;
+	align-content: center;
+}
+
+button {
+	margin: 0 auto;
+}
+
+div.container > img {
+	max-width: 10%;
+}
+

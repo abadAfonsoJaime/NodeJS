@@ -24,28 +24,32 @@
 
 //función síncrona
 	function addToArraySync(dato, lista) {
-		if (!Array.isArray(lista)) {
+
+		if ( !Array.isArray(lista) ) {
 			console.log("la variable no es un array")
 		}
-		else
-		{
+		else {
 			lista.push(data);
 		}
 	}
 
-
-
 //función Asíncrona
 	function addToArrayAsync(dato, lista, funcionCallback) {
-		if (!Array.isArray(lista)) {
-			funcionCallback(new Error("No existe el array"), null); }//new Error() es opcional, pero si requiere 2 parametros
-		else
-		{
+
+
+		if ( !Array.isArray(lista) ) {
+
+			//new Error() es opcional, pero si requiere 2 parametros
+			funcionCallback(new Error("No existe el array"), null); }
+		else {
 			lista.push(dato);
 			callback(null, lista);
 		}
 	}
-//Ambas funciones hacen lo mismo, pero si el Array lista proviene de un socket/API o esta sujeto a cualquier modificación externalizada, es necesario controlar el tiempo de ejecución --> Función Asíncrona
+//Ambas funciones hacen lo mismo, 
+//pero si el Array lista proviene de un socket/API
+// o esta sujeto a cualquier modificación externalizada, 
+//es necesario controlar el tiempo de ejecución --> Función Asíncrona
 
 
 /*++++++++++++++ SOLUCIÓN DE ASINCRONÍA CON CALLBACK ++++++++++++++*/
@@ -57,24 +61,24 @@ callback: function
 */
 
 function addToArrayCallback(dato, lista, funcionCallback) {
-		if (!Array.isArray(lista)) 
-		{
-			funcionCallback(new Error("No existe el array"), null); //new Error() es opcional, pero si requiere 2 parametros
+
+		if ( !Array.isArray(lista) ) {
+
+			 //new Error() es opcional, pero si requiere 2 parametros
+			funcionCallback(new Error("No existe el array"), null);
 		}
-		else
-		{
+		else {
 			lista.push(dato);
 			funcionCallback(null, lista);
 		}
 }
 
 function callbackHamburguesas(mensajeError, lista) {
-	if (mensajeError !== null)
-	{
+
+	if (mensajeError !== null) {
 		return console.log(mensajeError);
 	}
-	else
-	{
+	else {
 			console.log(lista);
 	}
 }
@@ -117,7 +121,9 @@ function decirError(lista) {
 	console.log("Error, no se ha podido aumentar la hamburguesa");
 }
 
-addToArrayPromise("cebolla", hamburguesa).then(pintarHamburguesa).catch(decirError);
+addToArrayPromise("cebolla", hamburguesa)
+	.then(pintarHamburguesa)
+	.catch(decirError);
 
 </script>
 

@@ -1,0 +1,19 @@
+{
+	"car1": {
+		"code": "V001",
+		"name": "Porsche 930 Turbo",
+		"max_speed": 290
+	},
+
+	"car2": {
+			"code": "V002",
+			"name": "Lamborgini Diablo",
+			"max_speed": 300
+	},
+
+	"car3": {
+			"code": "V003",
+			"name": "Ferrari 430",
+			"max_speed": 320
+	}
+}

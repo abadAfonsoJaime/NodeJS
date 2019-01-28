@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Almacenamiento remoto XML</title>
+
+	<link rel="stylesheet" type="text/css" href="css/myStyleSheet.css">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<script>
+		function control( lista, mensajeAviso ) {
+			if (lista.value == "CODIGO") {
+				alert( mensajeAviso );
+			}
+			else {
+				ajaxJSON();
+				return true;
+			}
+		}
+
+		function ajaxJSON() {
+			var resultado = document.getElementById( "capaResultado" );
+			httpRequest = new XMLHttpRequest();
+			/******** Apertura del archivo.json ********/
+			/******** true: modo asíncrono -> el flujo debe estar disponible completamente antes de su procesamiento ********/
+			httpRequest.open( "POST", "./servidorJSON.php", true ); 
+			//true: flujo diponible anbtes de ser tratado por la aplicación cliente
+			//POST: se va a pasar un argumento a la aplicación cliente
+			/******** Definición del tipo de flujo hacia el servidor********/
+			httpRequest.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
+			//Necesario para conservar el envío de argumentos desde un formulario HTML.
+			//Los valores de argumentos se codificarán (pos ej: sustitución de espacios por %20)
+			//http://www.theasciicode.com.ar/ascii-control-characters/backspace-ascii-code-8.html
+			var argumento = 'codigo=';
+			argumento += document.getElementById( 'lista' ).value;
+			httpRequest.send( argumento );
+		}
+
+	</script>
+</head>
+<body>
+	<form name="formulario">Código coche
+		<select id="lista" onchange=control(document.getElementById( 'lista' ), 'Por favor, seleccione un código'>
+			<option value="CODIGO" selected="">Codigo del coche</option>
+			<option value="V=001">V=001</option>
+			<option value="V=002">V=002</option>
+			<option value="V=003">V=003</option>
+		</select>
+	</form>
+	<!-- Capa de visualización del resultado en HTML -->
+	<div id="capaResultado"></div>
+
+<script>
+	//Recorrido de los objetos JavaScript
+	for ( var object in datos_json )
+	{
+		resultado.innerHTML += "Código del coche: " + datos_json[object].car_code + "<br/>";
+		resultado.innerHTML += "Nombre del coche: " + datos_json[object].car_name + "<br/>";
+		resultado.innerHTML += "Velocidad máxima: " + datos_json[object].max_speed + "<br/>";
+	}
+</script>
+
+</body>
+</html>
