@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Algebra</title>
+</head>
+<body>
+	<script>
+		class Punto {
+
+			constructor(_x, _y, _z) {
+				this.x = _x;
+				this.y = _y;
+				this.z = _z;
+			}
+			static isValidElement(threeDimension) {
+				if (Array.isArray(threeDimension)) {
+					return threeDimension.length === 3;
+				} else {
+					return false;
+				}
+			}
+		}
+
+		class Vector {
+			
+			constructor(_p1, _p2) {
+				this.v = new Array(
+					_p2[0] - _p1[0],
+					_p2[1] - _p1[1],
+					_p2[2] - _p1[2]
+				);
+			}
+			static prodEscalar2Vectores(r, s) {
+				return (r[0]*s[0]) + (r[1]*s[1]) +	(r[2]*s[2]);
+			}
+			static moduloVector(r, s) {
+				return Math.sqrt(
+					Vector.prodEscalar2Vectores(r, s)
+				);
+			}
+			static prodVectorial(r, s) {
+				return new Array(
+					(r[1] * s[2]) - (r[2] * s[1]),
+					(r[2] * s[0]) - (r[0] * s[2]),
+					(r[0] * s[1]) - (r[1] * s[0]),
+				)
+			}
+			static p_medio(r, s) {
+				return new Array(
+					(r[0] + s[0]) / 2,
+					(r[1] + s[1]) / 2,
+					(r[2] + s[2]) / 2
+				);
+			}
+		}
+		
+		
+		class Recta {
+
+			constructor(_p1, _p2) {
+				this.p1 = _p1;
+				this.p2 = _p2;
+				this.vectorDirector = new Vector(this.p1, this.p2);
+			}
+
+			get p1() {
+				return this.p1;
+			}
+			get p2() {
+				return this.p2;
+			}
+			get vectorDirector() {
+				return this.vectorDirector
+			}		
+			static isValidStraight(punto_A, punto_B) {
+				const p1Valido = Punto.isValidElement(punto_A);
+				const p2Valido = Punto.isValidElement(punto_B);
+				return p1Valido && p2Valido && p1Valido !== p2Valido;
+			}			
+		}
+
+		
+		class Plano {
+
+			constructor(_p1, _p2, _p3){
+				this.p1 = _p1;
+				this.p2 = _p2;
+				this.p3 = _p3;
+				this.v_dir1 = new Vector(_p1, _p2);
+				this.v_dir2 = new Vector(_p2, _p3);
+				this.vectorNormal = Vector.prodVectorial(
+					this.v_dir1,
+					this.v_dir2
+				);
+			}
+
+			get p1() {
+				return this.p1;
+			}
+			get p2() {
+				return this.p2;
+			}
+			get p3() {
+				return this.p3;
+			}
+			get vectorNormal() {
+				return Vector.prodVectorial(this.vectorNormal);
+			}
+			get D() {
+				return Plano.ecContinua_D(this.vectorNormal, this.p1);
+			} 
+
+			static ecContinua_D(ABC, pto) {
+				return Vector.prodEscalar2Vectores(ABC, pto) * (-1);
+			}
+			static isValidBluePrint(punto_A, punto_B, punto_C) {
+				const p1Valido = Punto.isValidElement(punto_A);
+				const p2Valido = Punto.isValidElement(punto_B);
+				const p3Valido = Punto.isValidElement(punto_C);
+				if (p1Valido && p2Valido && p3Valido) {
+					const determinante = Distancias.determinante(
+						punto_A,
+						punto_B,
+						punto_C
+					);
+					return determinante !== 0;
+				} else {
+					return false;
+				}
+			}
+			
+			set v_dir1(r){
+				this.v_dir1 = r;
+			}
+			set v_dir2(s) {
+				this.v_dir2 = s;
+			}
+			set vectorNormal(n) {
+				this.vectorNormal = n;
+			}
+		}
+
+		class Distancias {
+			constructor();
+
+			static valorAbsoluto(numero) {
+				if (numero < 0) {
+					return (-1) * numero;
+				} else {
+					return numero;
+				}
+			}
+			static determinante(v1, v2, v3){
+				return (v1[0] * v2[1] * v3[2])
+					+ (v1[1] * v2[2] * v3[0])
+					+ (v1[2] * v2[0] * v3[1])
+					- (v1[2] * v2[1] * v3[0])
+					- (v1[1] * v2[0] * v3[2])
+					- (v1[0] * v2[2] * v3[1]);
+			}
+
+			static distancia_pto_recta(pto, arrayPuntosRecta) {
+				let recta = new Recta(
+					arrayPuntosRecta[0],
+					arrayPuntosRecta[1]
+				);
+				const dividendo = Vector.prodVectorial(
+					new Vector(recta.p1 ,pto),
+					recta.vectorDirector
+				);
+				const divisor = Vector.moduloVector(recta.vectorDirector);
+				return Distancias.valorAbsoluto(dividendo) / divisor;
+			}
+			static distanciaRectasParalelas(arrayPuntos_r, arrayPuntos_t) {
+				let r = new Recta(
+					arrayPuntos_r[0],
+					arrayPuntos_r[1]
+				);
+				return distancia_pto_recta(r.p1, arrayPuntos_t);
+			}
+
+			static distanciaRectasCruzadas(arrayPuntos_r, arrayPuntos_t) {
+				let r = new Recta(
+					arrayPuntos_r[0],
+					arrayPuntos_r[1]
+				);
+				let t = new Recta(
+					arrayPuntos_t[0],
+					arrayPuntos_t[1]
+				);
+				const vectorUnion = new Vector( r.p1, t.p1);
+				const determinante = Distancias.determinante(
+					vectorUnion,
+					r.vectorDirector,
+					t.vectorDirector
+				);
+				const dividendo = Distancias.valorAbsoluto(determinante);
+				const divisor = Vector.prodVectorial(
+					r.vectorDirector,
+					s.vectorDirector
+				);
+				return dividendo / Distancias.valorAbsoluto(divisor);
+				
+			}
+
+			static distancia_pto_plano(pto, arrayPuntosPlano) {
+				const plano = new Plano(
+					arrayPuntosPlano[0],
+					arrayPuntosPlano[1],
+					arrayPuntosPlano[2]
+				);
+				const dividendo = plano.D + Vector.prodEscalar2Vectores(
+					pto,
+					plano.vectorNormal
+				);
+				const divisor = Vector.moduloVector(ABC);
+				return Distancias.valorAbsoluto(dividendo) / divisor;
+			}
+			static distanciaPlanosParalelos(arrayPuntosAlfa, arrayPuntosBeta) {
+				const alfa = new Plano(
+					arrayPuntosAlfa[0],
+					arrayPuntosAlfa[1],
+					arrayPuntosAlfa[2]
+				);
+				return Distancias.distancia_pto_plano(
+					alfa.p1,
+					arrayPuntosBeta
+				);
+			}
+		}
+
+		/* Calcular los rangos de las matrices --> MATLAB */
+		function  filaMatrizAmpliada() {
+			let filaMatrizAmpliada = this.vectorNormal;
+			filaMatrizAmpliada.push( this.ecContinua_D );
+			return filaMatrizAmpliada;
+		}
+			
+		
+		
+
+	</script>
+</body>
+</html>

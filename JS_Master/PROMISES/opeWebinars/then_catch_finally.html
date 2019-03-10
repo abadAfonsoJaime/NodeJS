@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <script src="main.js"></script> -->
+    <script 
+        src="https://code.jquery.com/jquery-3.3.1.js"
+        integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+        crossorigin="anonymous">
+    </script>
+</head>
+<body>
+    <script>
+        // Petición con jQuery
+        $( document ).ready(function () {
+           console.log('Antes de la petición');
+           let isLoading = true;
+           console.log(isLoading);
+           $.get('https://xxxx.in/api/users').then(
+           /* $.get('https://reqres.in/api/users').then( */
+               (respuesta) => {
+                   console.log('dentro del then()');
+                   console.log(respuesta);
+               }
+           )
+           .catch(
+               (respuesta) => {
+                   console.log('dentro del catch()');
+                   console.log(respuesta);
+               }
+           )
+           // finally() ¡No recibe parámetros!
+           /* .finally(
+               () => {
+                   isLoading = false;
+                   console.log('dentro del finally');
+                   console.log(isLoading);
+               }
+           ); */
+           console.log('después de la petición');
+        });
+        // La función del then() recibe como parámetro
+        // el dato que estamos esperando
+
+        // Petición con API Fetch nativa de JS
+       /*   $( document ).ready(function () {
+            console.log('Antes de la petición');
+            fetch('https://reqres.in/api/users').then(
+                (respuesta) => {
+                    console.log('dentro del then()');
+                    console.log(respuesta);
+                }
+            );
+            console.log('después de la petición');
+        }); */
+    </script>
+</body>
+</html>

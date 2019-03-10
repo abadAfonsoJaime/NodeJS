@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script 
+        src="https://code.jquery.com/jquery-3.3.1.js" 
+        integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+        crossorigin="anonymous">
+    </script>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>ejercicio race()</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script>
+        $( document ).ready(function() {
+           
+            let p1 = new Promise(
+                (resolve, reject) => {
+                    setTimeout(resolve, 500, 'uno');
+                }
+            );
+            let p2 = new Promise(
+                (resolve, reject) => {
+                    setTimeout(resolve, 200, 'dos');
+                }
+            );
+
+            Promise.race( [p1, p2] ).then(
+                value => { console.log('Resuelta: ', value); }
+                // Ambas se resuelven, pero la p2 antes
+            );
+
+
+            //Ejemplo con un resolve y un reject en el mismo método
+            let p3 = new Promise(
+                (resolve, reject) => {
+                    setTimeout(() => {
+                        resolve('tres');
+                    }, 100);
+                }
+            );
+            let p4 = new Promise(
+                (resolve, reject) => {
+                    setTimeout(() => {
+                        resolve('cuatro');
+                    }, 500);
+                }
+            );
+            Promise.race( [p3, p4] ).then(
+                value => {
+                    console.log('Resuelta: ', value);
+                    // p3 es más rápida, así que se resuelve el race()
+                },
+                reason => { console.log('Rechazada', reason); }
+                // No es llamado
+            );
+
+
+            let p5 = new Promise(
+                (resolve, reject) => {
+                    setTimeout(resolve, 500, 'cinco');
+                }
+            );
+            let p6 = new Promise(
+                (resolve, reject) => {
+                    setTimeout(reject, 300, 'seis');
+                }
+            );
+            Promise.race( [p5, p6] ).then(
+                value => { console.log('Resuelta', value); },
+                reason => { console.log('Rechazada', reason); }
+                // p6 es más rápida así que se rechaza el race()
+            );
+        });
+    </script>
+    
+</head>
+<body>
+    
+</body>
+</html>

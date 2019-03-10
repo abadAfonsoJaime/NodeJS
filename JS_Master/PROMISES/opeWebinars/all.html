@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script 
+        src="https://code.jquery.com/jquery-3.3.1.js" 
+        integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+        crossorigin="anonymous">
+    </script>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>ejercicio all()</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <script>
+        $( document ).ready( function() {
+           
+            let p1 = new Promise(
+                (resolve, reject) => {
+                    setTimeout(
+                        () => { resolve('una') },
+                        1000
+                    );
+                }
+            );
+
+            let p2 = new Promise(
+                (resolve, reject) => {
+                    setTimeout(
+                        () => { resolve('dos') },
+                        2000
+                    );
+                }
+            );
+
+            let p3 = new Promise(
+                (resolve, reject) => {
+                    setTimeout(
+                        resolve,
+                        3000,
+                        'tres'
+                    );
+                }
+            );
+
+            let p4 = new Promise(
+                (resolve, reject) => {
+                    setTimeout(
+                        resolve,
+                        4000,
+                        'cuatro'
+                    );
+                }
+            );
+
+            /* let p5 = new Promise(
+                (resolve, reject) => {
+                    reject('promesa 5 fallida');
+                }
+            ); */
+            let p5 = new Promise(
+                (resolve, reject) => {
+                    resolve('La promesa 5 ha ido bien');
+                }
+            );
+
+            Promise.all( [p1, p2, p3, p4, p5] ).then(
+                values => { console.log(values); },
+                reason => { console.log(reason); }
+            );
+        });
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script 
+        src="https://code.jquery.com/jquery-3.3.1.js" 
+        integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+        crossorigin="anonymous">
+    </script>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>encadenar Promesas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <script>
+        /* Para encadenar se necesita un return */
+
+        // 3 llamadas a .then() sobre la misma promesa, sin encadenar
+        $( document ).ready(function() {
+            console.log('Antes de la petición');
+            
+            let promise = $.get('https://reqres.in/api/users');
+
+            promise.then(
+                (respuesta) => {
+                    console.log('dentro del primer then()');
+                    console.log(respuesta);
+                    /* valen las dos opciones */
+                    return respuesta.data;
+                    /* return new Promise.resolve(respuesta.data); */
+                }
+            )
+            .then( 
+                (respuesta) => {
+                    console.log('dentro del segundo then()');
+                    console.log(respuesta);
+                    return respuesta[0];
+                }
+            )
+            .then(
+                (respuesta) => {
+                    console.log('dentro del tercer then()');
+                    console.log(respuesta);
+                }
+            );
+        });
+    </script>
+</body>
+</html>

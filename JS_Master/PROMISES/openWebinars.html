@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script 
+        src="https://code.jquery.com/jquery-3.3.1.js" 
+        integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+        crossorigin="anonymous">
+    </script>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>OpenWebinars</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <script src="main.js"></script> -->
+</head>
+<body>
+    <script>
+            /*
+                var promesa = new Promise(
+                    (resolve, reject) => {}
+                );
+
+                Si en el algoritmo llamamos al método
+                resolve() la promesa pasará del estado
+                Pending al estado Fullfilled
+
+                Si en el algoritmo llamamos al método
+                reject() la promesa pasará del estado
+                Pending al estado Rejected
+            */
+
+            /*
+                Si la promesa termina con resolve()
+                se llamará a la primera función
+                pasada al método .then()
+
+                Si la promesa termina con reject()
+                se llamará a la segunda función 
+                pasada al método .then()
+
+                El método .catch() es otra forma alternativa
+                de indicar la segunda función del .then()
+
+                El método pasado a .finally() se ejecutaría 
+                tanto si la promesa acaba con resolve()
+                como si acaba con reject()
+            */
+           'use strict';
+           let miPrimeraPromesa = new Promise(
+               (resolve, reject) => {
+                   setTimeout(() => {
+                       resolve('Success!');
+                   }, 2000);
+               }
+           );
+
+           $( document ).ready( () => {
+               if ("Promise" in window) {
+                   miPrimeraPromesa.then(
+                       (data) => {
+                           console.log(data);
+                       }
+                   );
+               } else {
+                   alert( "Tu navegador no soporta Promesas.");
+               }
+               console.log("Otro código");
+           })
+    </script>
+</body>
+</html>
