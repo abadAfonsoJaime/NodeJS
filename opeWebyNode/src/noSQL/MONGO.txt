@@ -1,0 +1,14 @@
+La librería mongoose es un ODM para NodeJS (Object Data Modelling)
+Permite modelar datos de Mongo, para utilizarlos en nuestra aplicación, ofreciendo una interfaz de fácil uso.
+Es más utilizada que el propio driver nativo de mongo
+
+
+$ npm install mongoose
+
+Instalación de Mongo en Debian desde el repositorio de paquetes mediante apt
+> sudo apt-get install mongodb-org
+
+https://docs.mongodb.com/manual/installation/
+$ mongo
+$ show dbs
+$ use dbName

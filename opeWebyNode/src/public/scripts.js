@@ -1,0 +1,1 @@
+console.log('Hola, soy un script estáticos');

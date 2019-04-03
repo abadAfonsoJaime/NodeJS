@@ -1,0 +1,22 @@
+Vamos a instalar 3 librerías:
+    got --> peticiones externas a una ruta en concreto
+    chai --> assertion testing tool
+    cheerio --> jQuery en el servidor (permite acceder al DUM directamente de un HTML)
+    mocha --> permite ejecutar los test desde el terminal
+
+npm i --save-dev got chai cheerio mocha
+
+Una vez que tenemos preparado y encapsulado el arranque de nuestro servidor configuramos los tests
+
+Preparamos un entorno de test con la variable de entorno NODE_ENV
+
+Configuramos la tarea test para ejecutar este entorno con mocha.
+Como trabajamos en ES6 hay que ejecutar mocha compilando con Babel
+También es aconsejable añadir un timeout por si fallan los test.
+Finalmente hay que indicar el directorio en el que están los test
+
+"test": "NODE_ENV=test mocha --compilers js:babel-register --timeout 10000 test/"
+DeprecationWarning: --compilers will be removed in a future version of Mocha, see https://git.io/vdcSr for more info
+
+
+Una vez que tenemos preparado y encapsulado el arranque de nuestro servidor configuramos los tests

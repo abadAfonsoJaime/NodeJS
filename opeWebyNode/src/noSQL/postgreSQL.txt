@@ -1,0 +1,20 @@
+postgre Sigue el estándar de SQL
+
+Para conectarnos a postgreSQL podemos utilzar Sequelize el ORM de NodeJS
+
+Sequelize es el ORM de NodeJS que nos permite modelar datos de una RDBMS
+Este ORM también está preparado para otras bases de datos como por ejemplo MySQL, SQLite...
+ofreciendo una interfaz común para todas las bases de datos con la particularidad de que
+habría que instalar el Driver específico de la base de datos que vayamos a utilizar.
+De esta manera podemos cambiar a otra DB distinta fácilmente.
+
+1. Instalar Postgre https://www.postgresql.org/download/
+2. Conectarnos a Postgre: 
+    > $ psql postgres
+    > $ /l
+3. Instalamos el driver de postgreSQL
+    "devDependencies": {
+        "pg": "^7.4.1",
+        "pg-hstore": "^2.3.2",
+        "sequelize": "^10.0.3",
+    }

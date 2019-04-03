@@ -1,0 +1,27 @@
+Es una librería muy utilizada para servicios web, ya sea una web que renderice un layout desde el servidor o una API REST
+Existen otras librerías como Koa, HappiJS, Restify...
+
+Esta API sobreescribe los objetos Request y Response de la librería Http
+Express nos wrapea todo, solo tenemos que indicarle en que ruta se encuentra por ejemplo un archivo y
+ya no tenemos que usar la librería fileSystem porque express ya lo hace.
+
+Magic Params: almacenea un parámetro del path dentro de una variable de manerea que será accesible desde
+request.params
+
+https://expressjs.com/es/guide/using-middleware.html
+
+Login Authentication
+Un middlewarwe comprueba si la petición viene autenticada con un token válido
+
+EXPRESS ES UNA DEPENDENCIA! no es exclusiva de DEV
+npm install --save express
+
+Uno de los Logger más utilizados es morgan
+npm install --save-dev morgan
+
+Otro middleware muy utilizado es body-parser:
+lo que hace es coge la información de una petición POST, lo parsea y lo guarda en el body de la request
+npm install --save body-parser
+
+Express se puede utilizar con cualquier plantilla, con cualquiera.
+npm install --save pug

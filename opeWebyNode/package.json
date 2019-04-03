@@ -1,0 +1,42 @@
+{
+  "name": "opeweby",
+  "version": "2.0.0",
+  "description": "App de openWebinars",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node --require babel-register src/index.js",
+    "events": "node --require babel-register src/eventos.js",
+    "socket": "node --require babel-register src/sockets.js",
+    "client": "node --require babel-register src/client.js",
+    "watch": "nodemon",
+    "server": "node --require babel-register src/Http/estilos.js",
+    "mongo": "node --require babel-register src/noSQL/mongoose.js",
+    "express": "node --require babel-register src/Express/errorHandling.js",
+    "router": "node --require babel-register src/refactor.js",
+	"testar": "node --require babel-register src/test_index.js",
+	"test": "NODE_ENV=test mocha --compilers js:babel-register --timeout 10000 test/"
+  },
+  "keywords": [
+    "node"
+  ],
+  "author": "Jaime Abad",
+  "license": "ISC",
+  "devDependencies": {
+    "babel": "^6.23.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-register": "^6.26.0",
+    "chai": "^4.2.0",
+    "cheerio": "^1.0.0-rc.2",
+    "got": "^9.6.0",
+    "mocha": "^6.0.2",
+    "morgan": "^1.9.1",
+    "nodemon": "^1.18.10"
+  },
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "express": "^4.16.4",
+    "mongoose": "^5.4.20",
+    "pug": "^2.0.3"
+  }
+}
