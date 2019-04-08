@@ -1,0 +1,83 @@
+REST --> Representational State Transfer: contiene la lógica de negocio.
+REST es cualquier interfaz entre sistemas que use HTTP para obtener datos 
+o generar operaciones sobre esos datos en todos los formatos posibles,
+como XML y JSON.
+
+VENTAJAS:
+    Separacoçpm emtre cliente y servidor
+    Visibilidad y escalabilidad
+    Independiente de la plataforma
+    Fácil de dividir en microservicios
+
+Caracetrísticas:
+    Cada petición HTTP contiene toda la información necesaria.
+    Los objetos se manipulan a partir de URI (la ruta)
+    Uso de Hypermedia --> 
+
+Existen 3 niveles de implementación de REST
+
+Para crear nuestra API vamos a necesitar la librería body-parser, la cual sirve para
+parsear a JSON todo el código que llegue por POST. Asímismo instalamos el paquete cors
+    npm install --save body-parser cors
+
+
+Cuando la URL del origen de la petición es distinto a la URL en la que se aloja la API REST,
+por seguridad el protocolo HTTP no permite modificar cabeceras. El paquete cors gestiona toda
+la configuración de verbos aceptados (GET, PUT, PATCH...), cabeceras del tipo Accept, el ORIGIN...
+
+Para configurar las variables de entorno utilizamos la librería dotenv 
+la cual permite crear ficheros y cargarlos directamente. Aquí se definen entre otras:
+    El HOST donde se aloja nuestra aplicación
+    El timezone
+    El puerto
+    Credenciales de conexión a la BBDD
+    Credenciales para Servicios de terceros
+    etc
+
+npm install --save dotenv
+
+Para nuestro entorno de Desarrollo crearemos un fichero oculto .env // en la raíz (al mismo nivel que src junto con el package.json)
+en este fichero definimos los valores de desarrollo de las variables de entorno
+
+En el archivo config.js cargamos la función { config } de la librería 'dotenv'
+que es la que nos permitirá cargar el fichero de las variables de entorno,
+definimos una variable con el valor config() y la mostramos por consola 
+para comprobar que efectivamente estamos cargando las variables de entorno
+
+para no tener que cargar las variables de entorno cada vez que quremos usarlas,
+le decimos a Express que nos las guarde: app.set('config', SETTINGS.parsed);
+
+RECORDAR QUE EL FICHERO .env SE DEBE INCLUIR EN EL .gitignore
+ya que en el servidor de producción voy a tener otro fichero de entorno
+
+#Project Directories
+.env
+
+
+
+
+SECURIZAR LA API REST --> middleware
+------------------------------------
+En primer lugar debemos instalar la librería jwt-simple que nos permite trabajar con el token jwt
+y que se irá generando en función de la autenticación del usuario
+npm i -save jwt-simple
+Otra cabecera que se suele utilizar es Bearer, la cual está egistrada por IANA
+como una cabecera soportada (https://www.iana.org/assignments/http-authschemes/http-authschemes.xhtml),
+
+Lo adecuado es generar tokens únicos: si el usuario existe en la base de datos, genera un token y se lo devuelves.
+
+
+
+TESTING THE API REST
+--------------------
+npm install --save-dev supertest mocha
+
+el comando para windows require incluir la palabra SET delante de la variable de entorno:
+windows: "test": " SET NODE_ENV=test mocha --compilers js:babel-register --timeout 10000 tests\\"
+mac y linux: "test": "NODE_ENV=test mocha --compilers js:babel-register --timeout 10000 tests\\"
+aunque a mi me sigue sin funcionar el seteo de las variables de entorno, revisar librería https://www.npmjs.com/package/cross-env
+
+El comando que funciona para babel 6 es: https://github.com/mochajs/mocha/wiki/compilers-deprecation
+"mocha --require babel-core/register --timeout 10000 testsFolder/"
+EJECUTAMOS EL TEST:
+Error --> Cannot read property address of undefined

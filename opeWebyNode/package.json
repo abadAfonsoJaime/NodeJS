@@ -13,8 +13,13 @@
     "mongo": "node --require babel-register src/noSQL/mongoose.js",
     "express": "node --require babel-register src/Express/errorHandling.js",
     "router": "node --require babel-register src/refactor.js",
-	"testar": "node --require babel-register src/test_index.js",
-	"test": "NODE_ENV=test mocha --compilers js:babel-register --timeout 10000 test/"
+    "testar": "node --require babel-register src/test_index.js",
+    "test": "mocha --require babel-core/register --timeout 10000 src/test/",
+    "rest": "node --require babel-register src/indexREST.js",
+    "rutasAPI": "node --require babel-register src/API_REST/modularizacionREST.js",
+    "test_API_REST": "mocha --require babel-core/register --timeout 10000 testsFolder/",
+    "webSocket": "node --require babel-register src/SOCKETS/index.js",
+    "build": "babel src/PROD -d dist"
   },
   "keywords": [
     "node"
@@ -23,20 +28,27 @@
   "license": "ISC",
   "devDependencies": {
     "babel": "^6.23.0",
+    "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "babel-register": "^6.26.0",
     "chai": "^4.2.0",
-    "cheerio": "^1.0.0-rc.2",
+    "cheerio": "^1.0.0-rc.3",
     "got": "^9.6.0",
-    "mocha": "^6.0.2",
+    "mocha": "^6.1.1",
     "morgan": "^1.9.1",
-    "nodemon": "^1.18.10"
+    "nodemon": "^1.18.10",
+    "pm2": "^3.5.0",
+    "supertest": "^4.0.2"
   },
   "dependencies": {
-    "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
+    "dotenv": "^7.0.0",
     "express": "^4.16.4",
+    "jwt-simple": "^0.5.6",
     "mongoose": "^5.4.20",
-    "pug": "^2.0.3"
+    "pug": "^2.0.3",
+    "ws": "^6.2.1"
   }
 }

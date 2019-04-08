@@ -17,7 +17,7 @@ const server = {
 
         app.disable('x-powered-by');
 
-        app.set('env', process.env.NODE_ENV); // el tedt se carga en NODE_ENV
+        app.set('env', process.env.NODE_ENV); // el test se carga en NODE_ENV
 
         if ( process.env.NODE_ENV !== 'test') {
             app.use( logger('combined') );

@@ -1,0 +1,43 @@
+DOCKER son pequeños contenedores ligeros y portables
+
+Encapsulamos la aplicación en un docker totalmente independiente del sistema operativo donde se utilice.
+Se genera una imagen de Docker y se publica en el servidor
+
+Es interesante automatizar que en cada despliegue del código, se eliomine la imagen de Docker 
+que esté alojada en el servidor, y se utilice una nueva.
+
+$ docker --version
+$ docker ps -a
+$ docker ps
+
+1. Creamos el fichero Dockerfile con todos los pasos que queremos que haga nuestra app
+https://hub.docker.com/_/registry/
+podemos acceder a esta web y buscar el generador de imagen Docker para la versión de NodeJS que tengamos
+
+a. le decimos que versión de NodeJS vamos a utilizar
+b. elegimos un directorio de trabajo
+c. decimos a docker que copie tanto el package-lock.json como el package.json a nuestro directorio de trabajo
+d. que instale todas las dependencias
+e. crear un bundle del código (recommended)  (genera una copia de todo en sí mismo)
+f. ejecuta el build
+g. indicamos que puerto queremos abrir al exterior
+h. ejecutamos una tarea que lance nuestro servidor
+
+
+2. Creamos un .dockerignore para que ignore node_modules y npm-debug.log
+
+
+3. Le decimos a Docker que construya la imagen
+$ docker build -t jaime.abad/appName .
+
+4.  $ docker ps -a
+    $ docker ps
+Si no tenemos nada le decimos que redireccione el puerto para que sea accesible (fuera de Docker) desde otro puerto
+    $ docker run -p 49160:9000 -d jaime.abad/appName
+Internamente utiliza el puerot 9000 pero lo redirecciona para que nosotros accedamos a través del 49160
+    $ docker ps
+Para ver lo úlitmo que se ha hecho
+    $ docker logs
+
+
+EN RESUMEN, esta es una manera en las que funciona la creación de Microservicios

@@ -1,0 +1,40 @@
+1. $ npm install babel --save-dev
+2. $ npm install --save-dev babel-cli
+
+3. Creamos un script en el package.json para, mediante babel,
+comprimir todo el código que esté en src (en este caso src/PROD)y lo guardamos en un directorio dist:
+"scripts": {
+    "build": "babel src/PROD -d dist"
+}
+
+4. $ npm run build
+
+5. $ node dist/index.js
+
+De esta manera dejamos de hacer la precompilación que hacíamos en desarrollo con babel.
+Con lo cual, lo que deberíamos de desplegar en el servidor de producción es el directorio dist/
+No obstante, este directorio dist/ debemos añadirlo al .gitignore
+#Project Directories
+.env
+.dist/*
+
+
+
+La librería pm2 nos permite instalar varias instancias de NodeJS dentro de un mismo servidor
+npm install --save-dev pm2
+
+Para utilizar esta librería, le decimos que ejecute
+pm2 start dist/index.js
+
+En windows no está soportada, pero en principio nos muestra los servidores arrancados.
+Podemos parar cada uno de ellos con los comandos
+    $ pm2 stop 0
+    $ pm2 stop 1
+    $ pm2 stop 2
+    ...
+Así mismo podríamos borrarlos e.g: $ pm2 delete 1
+
+También puede utilizarse como nodemon --> si modificamos el código se reinicia
+
+Nos permite monitorizar dichas instancias de NodeJS
+    $ pm2 monit

@@ -7,9 +7,9 @@
 
 import got from 'got';
 import { expect } from 'chai'; // solo lo que vamos a utilizar de chai
-import cheerio from 'cherio';
+import cheerio from 'cheerio';
 
-import server from '../src'; // importamos nuestro servidor
+import server from '../test_index'; // importamos nuestro servidor
 import { isTSAnyKeyword } from 'babel-types';
 
 // La ruta 'landing' nos devuelve un .pug renderizado como html
@@ -30,7 +30,7 @@ describe( 'Test: landing', () => {
 
             const response = await got('http://localhost:9000'); // Devuelve una promesa
             // Funcionalidad de cherio
-            const $ = cherio.load(response.body);
+            const $ = cheerio.load(response.body);
             // acceder a la etiqueta body
             expect( $('body').hasClass('home') ).to.be.true 
             // comprobar que no es un falso positivo
